@@ -13,11 +13,15 @@ var VERSION = "dev"
 
 func main() {
 	port := flag.Int("port", 3777, "Port to listen on")
-	file := flag.String("file", "./data.csv", "Csv file path")
 	flag.Parse()
 
+	file := "./data.csv"
+	if flag.NArg() > 0 {
+		file = flag.Arg(0)
+	}
+
 	printBanner(*port)
-	ds, error := datasource.NewCSVDataSource(*file, true)
+	ds, error := datasource.NewCSVDataSource(file, true)
 	if error != nil {
 		log.Println(error)
 		return
