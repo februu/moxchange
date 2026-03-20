@@ -1,4 +1,6 @@
 bin := if os() == "windows" { "build/moxchange.exe" } else { "build/moxchange" }
+tag := `git describe --tags --abbrev=0 2>/dev/null || echo dev`
+commit := `git rev-parse --short HEAD`
 
 default:
     @just --list
@@ -12,10 +14,11 @@ lint:
 lint-full: lint
     nilaway ./...
 
-build: lint
-    go build -o {{ bin }}
+build: clean lint
+    go build -ldflags "-X 'main.VERSION={{ tag }}-{{ commit }}'" -o {{ bin }}
 
 clean:
+    go clean
     rm -rf build/
 
 run: build

@@ -9,7 +9,7 @@ import (
 	"github.com/februu/moxchange/internal/exchange"
 )
 
-const VERSION = "x.x.x"
+var VERSION = "dev"
 
 func main() {
 	port := flag.Int("port", 3777, "Port to listen on")
