@@ -3,6 +3,7 @@ package exchange
 import (
 	"fmt"
 
+	"github.com/rs/zerolog/log"
 	"github.com/shopspring/decimal"
 )
 
@@ -53,6 +54,7 @@ func (e *Exchange) nextKline() (Kline, error) {
 		return Kline{}, err
 	}
 	e.lastKline = kline
+	log.Debug().Msgf("current kline: %+v", kline)
 	return kline, nil
 }
 
@@ -69,6 +71,7 @@ func (e *Exchange) PlaceOrder(order Order) (id uint64, err error) {
 
 	id = nextID()
 	e.ActiveOrders[id] = order
+	log.Info().Msgf("placed order id: %d, %+v", id, order)
 	return id, nil
 }
 
@@ -91,6 +94,7 @@ func (e *Exchange) CancelOrder(id uint64, accountID string) error {
 		return fmt.Errorf("order %d does not belong to account %s", id, accountID)
 	}
 	delete(e.ActiveOrders, id)
+	log.Info().Msgf("cancelled order: %d", id)
 	return nil
 }
 
@@ -115,6 +119,7 @@ func (e *Exchange) ClosePosition(id uint64, accountID string) error {
 	}
 	// TODO: Close position
 	delete(e.Positions, id)
+	log.Info().Msgf("closed position: %d", id)
 	return nil
 }
 
@@ -156,6 +161,7 @@ func (e *Exchange) executeOrder(order Order) error {
 	}
 
 	e.Positions[position.ID] = position
+	log.Info().Msgf("Opened position %d for order %d", position.ID, id)
 	return nil
 }
 
@@ -171,6 +177,7 @@ func (e *Exchange) updatePositions() []error {
 			position.ClosedAt = e.lastKline.Timestamp
 			e.Accounts[position.AccountID].PositionHistory = append(e.Accounts[position.AccountID].PositionHistory, position)
 			delete(e.Positions, position.ID)
+			log.Info().Msgf("Closed position %d", position.ID)
 			continue
 		}
 		if e.lastKline.Contains(position.TakeProfit) {
@@ -179,6 +186,7 @@ func (e *Exchange) updatePositions() []error {
 			position.ClosedAt = e.lastKline.Timestamp
 			e.Accounts[position.AccountID].PositionHistory = append(e.Accounts[position.AccountID].PositionHistory, position)
 			delete(e.Positions, position.ID)
+			log.Info().Msgf("Closed position %d", position.ID)
 			continue
 		}
 		e.Positions[position.ID] = position

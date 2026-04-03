@@ -3,6 +3,8 @@ package datasource
 import (
 	"encoding/csv"
 	"os"
+
+	"github.com/rs/zerolog/log"
 )
 
 type CSVDataSource struct {
@@ -16,6 +18,7 @@ func NewCSVDataSource(path string, skipHeader bool) (*CSVDataSource, error) {
 	if err != nil {
 		return nil, err
 	}
+	log.Info().Msgf("successfully opened CSV file: %s", path)
 
 	r := csv.NewReader(f)
 
