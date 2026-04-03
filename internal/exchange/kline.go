@@ -16,7 +16,24 @@ type Kline struct {
 	Volume    decimal.Decimal
 }
 
-func NewKline(timestamp string, open, high, low, close, volume decimal.Decimal) Kline {
+func NewKline(timestamp string, open, high, low, close, volume decimal.Decimal) (Kline, error) {
+
+	if !open.IsPositive() || !high.IsPositive() || !low.IsPositive() || !close.IsPositive() {
+		return Kline{}, fmt.Errorf("invalid kline: open=%s high=%s low=%s close=%s volume=%s, ohlc values must be positive", open, high, low, close, volume)
+	}
+
+	if high.LessThan(low) {
+		return Kline{}, fmt.Errorf("invalid kline: high=%s low=%s, high must be greater than low", high, low)
+	}
+
+	if open.GreaterThan(high) || open.LessThan(close) {
+		return Kline{}, fmt.Errorf("invalid kline: open=%s high=%s low=%s close=%s, open must be less than high and greater than close", open, high, low, close)
+	}
+
+	if close.GreaterThan(high) || close.LessThan(low) {
+		return Kline{}, fmt.Errorf("invalid kline: close=%s high=%s low=%s, close must be less than high and greater than low", close, high, low)
+	}
+
 	return Kline{
 		Timestamp: timestamp,
 		Open:      open,
@@ -24,7 +41,7 @@ func NewKline(timestamp string, open, high, low, close, volume decimal.Decimal) 
 		Low:       low,
 		Close:     close,
 		Volume:    volume,
-	}
+	}, nil
 }
 
 func NewKlineFromCSV(row []string) (Kline, error) {
@@ -57,14 +74,7 @@ func NewKlineFromCSV(row []string) (Kline, error) {
 		return Kline{}, fmt.Errorf("invalid volume '%s': %w", row[5], err)
 	}
 
-	return Kline{
-		Timestamp: row[0],
-		Open:      open,
-		High:      high,
-		Low:       low,
-		Close:     close,
-		Volume:    volume,
-	}, nil
+	return NewKline(row[0], open, high, low, close, volume)
 }
 
 func (k *Kline) Contains(price decimal.Decimal) bool {
