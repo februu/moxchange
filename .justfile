@@ -27,6 +27,9 @@ commit := `git rev-parse --short HEAD`
 @test:
     go test -race ./...
 
+@test-verbose:
+    go test -race -v ./...
+
 @cover:
     go test -race -coverprofile=coverage.out ./...
     go tool cover -func=coverage.out
