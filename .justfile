@@ -35,7 +35,7 @@ commit := `git rev-parse --short HEAD`
     go tool cover -func=coverage.out
     go tool cover -html=coverage.out -o coverage.html
 
-@ci: lint test cover
+@ci: lint test
 
 [working-directory('docs')]
 @docs-serve:
