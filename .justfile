@@ -1,5 +1,5 @@
 bin := if os() == "windows" { "build/moxchange.exe" } else { "build/moxchange" }
-tag := `git describe --tags --abbrev=0 2>/dev/null || echo dev`
+tag := `git describe --tags --abbrev=0 2>/dev/null || git rev-parse --abbrev-ref HEAD 2>/dev/null || echo dev`
 commit := `git rev-parse --short HEAD`
 
 @default:
