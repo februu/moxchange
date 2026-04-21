@@ -14,11 +14,13 @@ func TestNewKline(t *testing.T) {
 		close decimal.Decimal
 		valid bool
 	}{
-		{decimal.NewFromInt(100), decimal.NewFromInt(200), decimal.NewFromInt(50), decimal.NewFromInt(80), true},
+		{decimal.NewFromInt(100), decimal.NewFromInt(200), decimal.NewFromInt(50), decimal.NewFromInt(80), true},  // bearish: open > close
+		{decimal.NewFromInt(60), decimal.NewFromInt(200), decimal.NewFromInt(50), decimal.NewFromInt(80), true},  // bullish: open < close, open > low
 		{decimal.NewFromInt(100), decimal.NewFromInt(-100), decimal.NewFromInt(50), decimal.NewFromInt(80), false},  // negative high
 		{decimal.NewFromInt(100), decimal.NewFromInt(100), decimal.NewFromInt(120), decimal.NewFromInt(100), false}, // low > high
 		{decimal.NewFromInt(300), decimal.NewFromInt(200), decimal.NewFromInt(50), decimal.NewFromInt(80), false},   // open > high
-		{decimal.NewFromInt(20), decimal.NewFromInt(200), decimal.NewFromInt(50), decimal.NewFromInt(80), false},    // open < low
+		{decimal.NewFromInt(40), decimal.NewFromInt(200), decimal.NewFromInt(50), decimal.NewFromInt(30), false},    // open < low, open > close
+		{decimal.NewFromInt(20), decimal.NewFromInt(200), decimal.NewFromInt(50), decimal.NewFromInt(80), false},    // open < low, open < close
 		{decimal.NewFromInt(100), decimal.NewFromInt(200), decimal.NewFromInt(50), decimal.NewFromInt(300), false},  // close > high
 		{decimal.NewFromInt(100), decimal.NewFromInt(200), decimal.NewFromInt(50), decimal.NewFromInt(20), false},   // close < low
 	}
