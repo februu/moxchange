@@ -26,8 +26,8 @@ func NewKline(timestamp string, open, high, low, close, volume decimal.Decimal) 
 		return Kline{}, fmt.Errorf("invalid kline: high=%s low=%s, high must be greater than low", high, low)
 	}
 
-	if open.GreaterThan(high) || open.LessThan(close) {
-		return Kline{}, fmt.Errorf("invalid kline: open=%s high=%s low=%s close=%s, open must be less than high and greater than close", open, high, low, close)
+	if open.GreaterThan(high) || open.LessThan(low) {
+		return Kline{}, fmt.Errorf("invalid kline: open=%s high=%s low=%s close=%s, open must be less than high and greater than low", open, high, low, close)
 	}
 
 	if close.GreaterThan(high) || close.LessThan(low) {
