@@ -80,3 +80,8 @@ func (o *Order) Validate(currentKline Kline, account Account) error {
 
 	return nil
 }
+
+func (o *Order) String() string {
+	return fmt.Sprintf("Order{Timestamp: %d, AccountID: %s, Type: %s, Side: %s, Price: %s, Quantity: %s, StopLevel: %s, ProfitLevel: %s}",
+		o.Timestamp, o.AccountID, o.Type, o.Side, o.Price.String(), o.Quantity.String(), o.StopLevel.String(), o.ProfitLevel.String())
+}
