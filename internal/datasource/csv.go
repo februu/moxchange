@@ -39,12 +39,15 @@ func NewCSVDataSource(path string, skipHeader bool) (*CSVDataSource, error) {
 func (c *CSVDataSource) Next() ([]string, error) {
 	record, err := c.reader.Read()
 	if err != nil {
+		if err.Error() == "EOF" {
+			c.close()
+		}
 		return nil, err
 	}
 	return record, nil
 }
 
-func (c *CSVDataSource) Close() error {
+func (c *CSVDataSource) close() error {
 	if c.file != nil {
 		return c.file.Close()
 	}
