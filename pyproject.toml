@@ -1,0 +1,7 @@
+[project]
+name = "moxchange"
+version = "0.1.0"
+description = "Mockup exchange that lets you backtest your automated strategies using websockets."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []
