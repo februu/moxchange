@@ -11,4 +11,4 @@ class Kline:
     high: Decimal
     low: Decimal
     close: Decimal
-    volume: float | None
+    volume: Decimal | None

@@ -19,7 +19,7 @@ class CSVFeed:
 
     def _process_row(self, row: list[str]) -> Kline:
         timestamp, _open, high, low, close = row[:5]
-        volume = float(row[5]) if len(row) > 5 else None
+        volume = Decimal(row[5]) if len(row) > 5 else None
         return Kline(
             timestamp=timestamp,
             open=Decimal(_open),
