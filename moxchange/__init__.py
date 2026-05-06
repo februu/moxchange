@@ -1,4 +1,4 @@
-from .engine import Simulator
+from .simulator import Simulator
 from .feeds import CSVFeed, MockFeed
 from .cli import CLI
 
