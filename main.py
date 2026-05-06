@@ -1,10 +1,15 @@
-from moxchange import CLI, MockFeed, Simulator
+from moxchange import CLI, MockFeed, Simulator, EventBus, EventType
 
 VERSION = "dev"
 
+
 cli = CLI()
 feed = MockFeed(amount_of_klines=500, starting_price=100.0)
-simulator = Simulator(feed)
+bus = EventBus()
+
+bus.subscribe(EventType.CANDLE, cli.on_candle_event)
+
+simulator = Simulator(bus, feed)
 
 
 def main():
