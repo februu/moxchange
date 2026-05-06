@@ -5,17 +5,25 @@ from moxchange.types import Kline
 
 
 class CSVFeed:
+    """Data feed that reads Kline data from a CSV file."""
+
     def __init__(self, file_path: str, has_header: bool = True):
         self._file_path = file_path
-        self._has_header = has_header
+        self._file = open(file_path, "r", newline="")
+        self._reader = csv.reader(self._file)
+        if has_header:
+            next(self._reader)
 
     def __iter__(self) -> Iterator[Kline]:
-        with open(self._file_path, "r", newline="") as f:
-            reader = csv.reader(f)
-            if self._has_header:
-                next(reader)
-            for row in reader:
-                yield self._process_row(row)
+        return self
+
+    def __next__(self) -> Kline:
+        try:
+            row = next(self._reader)
+            return self._process_row(row)
+        except StopIteration:
+            self._file.close()
+            raise
 
     def _process_row(self, row: list[str]) -> Kline:
         timestamp, _open, high, low, close = row[:5]
