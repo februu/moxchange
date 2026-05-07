@@ -1,5 +1,5 @@
 <div align="center">
-  <img src=".github/media/banner.png" alt="moxchange" width="100%" />
+  <img src="./docs/images/banner.png" alt="moxchange" width="100%" />
 </div>
 
 <br />
