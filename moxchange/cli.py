@@ -29,14 +29,20 @@ class CLI:
 
         direction = "▲" if candle.is_bullish() else "▼"
         color = "green" if candle.is_bullish() else "red"
-        change_pct = ((candle.close - candle.open) / candle.open) * 100
+
+        extra = (
+            "\t".join(
+                f"[dim]{k}:[/dim][{color}]{str(v):<10}[/{color}]"
+                for k, v in candle.data.items()
+            )
+            if candle.data
+            else ""
+        )
 
         console.print(
             f"[{color}]{direction}[/{color}]  "
-            f"[dim]{candle.timestamp}[/dim]\t"
-            f"[dim]O:[/dim][{color}]{candle.open:<10}[/{color}] \t"
-            f"[dim]H:[/dim][{color}]{candle.high:<10}[/{color}] \t"
-            f"[dim]L:[/dim][{color}]{candle.low:<10}[/{color}] \t"
-            f"[dim]C:[/dim][{color}]{candle.close:<10}[/{color}]"
-            f"[bold {color}]\t{change_pct:+.2f}%[/bold {color}]"
+            f"[dim]o:[/dim][{color}]{candle.open:<10}[/{color}] "
+            f"[dim]h:[/dim][{color}]{candle.high:<10}[/{color}] "
+            f"[dim]l:[/dim][{color}]{candle.low:<10}[/{color}] "
+            f"[dim]c:[/dim][{color}]{candle.close:<10}[/{color}] " + extra
         )

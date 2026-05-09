@@ -1,17 +1,16 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from decimal import Decimal
 
 
 @dataclass(frozen=True)
 class Kline:
-    """Represents a single candlestick. Neither timestamp nor volume should be used for any calculations."""
+    """Represents a single candlestick."""
 
-    timestamp: str | None
     open: Decimal
     high: Decimal
     low: Decimal
     close: Decimal
-    volume: Decimal | None
+    data: dict = field(default_factory=dict, compare=False)
 
     def __post_init__(self):
         """Validates that OHLC values are positive and logically consistent."""

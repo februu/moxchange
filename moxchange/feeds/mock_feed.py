@@ -42,16 +42,22 @@ class MockFeed:
         high_price = max(ticks)
         low_price = min(ticks)
 
-        volume = Decimal(str(round(self._generator.uniform(*self._volume_range), 4)))
-
         self._last_close = close_price
         self._current_index += 1
 
         return Kline(
-            timestamp=str(self._current_index),
             open=Decimal(str(round(open_price, 8))),
             high=Decimal(str(round(high_price, 8))),
             low=Decimal(str(round(low_price, 8))),
             close=Decimal(str(round(close_price, 8))),
-            volume=volume,
+            data={
+                "volume": Decimal(
+                    str(
+                        round(
+                            self._generator.uniform(*self._volume_range),
+                            2,
+                        )
+                    )
+                )
+            },
         )
