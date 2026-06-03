@@ -49,3 +49,11 @@ class CSVFeed:
                 low=Decimal(low),
                 close=Decimal(close),
             )
+
+    def reset(self):
+        """Reset the feed to the beginning of the file."""
+        self._file.seek(0)
+        if self._has_header:
+            self._reader = csv.DictReader(self._file)
+        else:
+            self._reader = csv.reader(self._file)

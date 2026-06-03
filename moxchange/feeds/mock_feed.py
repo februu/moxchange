@@ -16,12 +16,14 @@ class MockFeed:
         volume_range: tuple[float, float] = (100.0, 1000.0),
         seed: int = 42,
     ):
+        self._seed = seed
         self._generator = random.Random(seed)
         self._amount_of_klines = amount_of_klines
         self._volatility = volatility
         self._drift = drift
         self._volume_range = volume_range
         self._current_index = 0
+        self._starting_price = starting_price
         self._last_close = starting_price
 
     def __iter__(self) -> Iterator[Kline]:
@@ -61,3 +63,9 @@ class MockFeed:
                 )
             },
         )
+
+    def reset(self):
+        """Reset the feed to the initial state."""
+        self._generator = random.Random(self._seed)
+        self._current_index = 0
+        self._last_close = self._starting_price
