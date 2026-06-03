@@ -10,5 +10,9 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "pytest>=9.0.3",
     "zensical>=0.0.40",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
