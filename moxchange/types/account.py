@@ -1,11 +1,12 @@
 import uuid
+from decimal import Decimal
 
 
 class Account:
-    def __init__(self, custom_name: str = ""):
-        self.id = str(uuid.uuid4())
+    def __init__(self, id: uuid.UUID, custom_name: str = ""):
+        self.id = id
         self.custom_name = custom_name
-        self.balance = 0.0
+        self.balance : Decimal = Decimal("0.0")
         self.positions = {}
 
 
