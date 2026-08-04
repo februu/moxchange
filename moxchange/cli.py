@@ -1,7 +1,8 @@
 from rich.console import Console
 
-from .events import Event
 from moxchange.types import Kline
+
+from .events import KlineEvent
 
 console = Console(highlight=False)
 
@@ -22,10 +23,10 @@ class CLI:
             f"⚡ Connect your client here: [green]127.0.0.1:{port}/ws[/green]\n"
         )
 
-    def on_candle_event(self, event: Event) -> None:
+    def on_candle_event(self, event: KlineEvent) -> None:
         """Handles candle events."""
 
-        candle: Kline = event.payload
+        candle: Kline = event.kline
 
         direction = "▲" if candle.is_bullish() else "▼"
         color = "green" if candle.is_bullish() else "red"
