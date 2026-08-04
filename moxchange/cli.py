@@ -25,25 +25,19 @@ class CLI:
 
     def on_candle_event(self, event: KlineEvent) -> None:
         """Handles candle events."""
-
         candle: Kline = event.kline
-
-        direction = "▲" if candle.is_bullish() else "▼"
-        color = "green" if candle.is_bullish() else "red"
-
         extra = (
             "\t".join(
-                f"[dim]{k}:[/dim][{color}]{v!s:<10}[/{color}]"
-                for k, v in candle.data.items()
+                f"[dim]{v!s:<10}[/dim]"
+                for v in candle.data.values()
             )
             if candle.data
             else ""
         )
-
         console.print(
-            f"[{color}]{direction}[/{color}]  "
-            f"[dim]o:[/dim][{color}]{candle.open:<10}[/{color}] "
-            f"[dim]h:[/dim][{color}]{candle.high:<10}[/{color}] "
-            f"[dim]l:[/dim][{color}]{candle.low:<10}[/{color}] "
-            f"[dim]c:[/dim][{color}]{candle.close:<10}[/{color}] " + extra
+            f"[dim]{candle.symbol}[/dim]  "
+            f"[dim]{candle.open}[/dim] "
+            f"[dim]{candle.high}[/dim] "
+            f"[dim]{candle.low}[/dim] "
+            f"[dim]{candle.close}[/dim] " + extra
         )
