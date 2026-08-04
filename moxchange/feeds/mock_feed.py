@@ -10,6 +10,7 @@ class MockFeed:
 
     def __init__(
         self,
+        symbol: str,
         amount_of_klines: int = 100,
         starting_price: float = 100.0,
         volatility: float = 0.015,
@@ -17,6 +18,7 @@ class MockFeed:
         volume_range: tuple[float, float] = (100.0, 1000.0),
         seed: int = 42,
     ):
+        self._symbol = symbol
         self._seed = seed
         self._generator = random.Random(seed)
         self._amount_of_klines = amount_of_klines
@@ -49,6 +51,7 @@ class MockFeed:
         self._current_index += 1
 
         return Kline(
+            symbol=self._symbol,
             open=Decimal(str(round(open_price, 8))),
             high=Decimal(str(round(high_price, 8))),
             low=Decimal(str(round(low_price, 8))),

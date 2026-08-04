@@ -9,7 +9,7 @@ bus = EventBus()
 
 cli = CLI()
 
-feed = MockFeed(amount_of_klines=500, starting_price=100.0)
+feed = MockFeed(symbol="BTCUSD", amount_of_klines=500, starting_price=100.0)
 
 account_service = AccountService(bus)
 

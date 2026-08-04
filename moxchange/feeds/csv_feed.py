@@ -8,7 +8,8 @@ from moxchange.types import Kline
 class CSVFeed:
     """Data feed that reads Kline data from a CSV file."""
 
-    def __init__(self, file_path: str, has_header: bool = True):
+    def __init__(self, symbol: str, file_path: str, has_header: bool = True):
+        self._symbol = symbol
         self._file_path = file_path
         self._file = open(file_path, "r", newline="")  # noqa: SIM115
         self._has_header = has_header
@@ -36,6 +37,7 @@ class CSVFeed:
                 if k.lower() not in {"open", "high", "low", "close"}
             }
             return Kline(
+                symbol=self._symbol,
                 open=Decimal(row["open"]),
                 high=Decimal(row["high"]),
                 low=Decimal(row["low"]),
@@ -45,6 +47,7 @@ class CSVFeed:
         else:
             _open, high, low, close = row[:4]
             return Kline(
+                symbol=self._symbol,
                 open=Decimal(_open),
                 high=Decimal(high),
                 low=Decimal(low),

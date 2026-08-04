@@ -6,6 +6,7 @@ from decimal import Decimal
 class Kline:
     """Represents a single candlestick."""
 
+    symbol: str
     open: Decimal
     high: Decimal
     low: Decimal
