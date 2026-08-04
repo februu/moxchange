@@ -1,17 +1,16 @@
-from moxchange.types import Account
+from moxchange.services import AccountService
 
-from .events import AddAccountEvent, EventBus, KlineEvent
+from .events import EventBus, KlineEvent
 from .feeds.data_feed import DataFeed
 
 
 class Simulator:
     """Simulates a trading environment."""
 
-    def __init__(self, event_bus: EventBus, feed: DataFeed):
+    def __init__(self, event_bus: EventBus, feed: DataFeed, account_service: AccountService):
         self.event_bus = event_bus
-        self.event_bus.subscribe(AddAccountEvent, self._add_account)
         self.feed = feed
-        self.accounts : dict[str, Account] = {}
+        self.account_service = account_service
 
     def step(self):
         """Advances the simulation by one step, processing the next Kline."""
@@ -21,8 +20,4 @@ class Simulator:
     def reset(self):
         """Resets the simulation to its initial state."""
         self.feed.reset()
-        self.accounts.clear()
-
-    def _add_account(self, event: AddAccountEvent):
-        """Adds an account to the simulation."""
-        self.accounts[event.account.id] = event.account
+        self.account_service.clear()

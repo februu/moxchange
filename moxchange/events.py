@@ -3,18 +3,13 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any, TypeVar
 
-from moxchange.types import Account, Kline
+from moxchange.types import Kline
 
 
 @dataclass(frozen=True)
 class KlineEvent:
     """Event representing a Kline (candlestick) data point."""
     kline: Kline
-
-@dataclass(frozen=True)
-class AddAccountEvent:
-    """Event representing the addition of a new account."""
-    account: Account
 
 TEvent = TypeVar("TEvent")
 

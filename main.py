@@ -1,16 +1,22 @@
-from moxchange import CLI, EventBus, EventType, MockFeed, Simulator
+from moxchange import CLI, EventBus, MockFeed, Simulator
+from moxchange.events import KlineEvent
+from moxchange.services import AccountService
 
+DEBUG = True
 VERSION = "dev"
 
-
-cli = CLI()
-feed = MockFeed(amount_of_klines=500, starting_price=100.0)
 bus = EventBus()
 
-bus.subscribe(EventType.CANDLE, cli.on_candle_event)
+cli = CLI()
 
-simulator = Simulator(bus, feed)
+feed = MockFeed(amount_of_klines=500, starting_price=100.0)
 
+account_service = AccountService(bus)
+
+simulator = Simulator(bus, feed, account_service)
+
+if DEBUG:
+    bus.subscribe(KlineEvent, cli.on_candle_event)
 
 def main():
     cli.print_banner(version=VERSION, port=8765)
