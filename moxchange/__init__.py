@@ -1,6 +1,6 @@
-from .simulator import Simulator
-from .feeds import CSVFeed, MockFeed
 from .cli import CLI
-from .events import EventBus, Event, EventType
+from .events import Event, EventBus, EventType
+from .feeds import CSVFeed, MockFeed
+from .simulator import Simulator
 
-__all__ = ["Simulator", "CSVFeed", "MockFeed", "CLI", "EventBus", "Event", "EventType"]
+__all__ = ["CLI", "CSVFeed", "Event", "EventBus", "EventType", "MockFeed", "Simulator"]

@@ -1,6 +1,7 @@
-from typing import Iterator
-from moxchange.types import Kline
+from collections.abc import Iterator
+
 from moxchange.feeds import DataFeed
+from moxchange.types import Kline
 
 
 class RoundRobinFeed:

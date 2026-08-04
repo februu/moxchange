@@ -1,4 +1,4 @@
-from moxchange import CLI, MockFeed, Simulator, EventBus, EventType
+from moxchange import CLI, EventBus, EventType, MockFeed, Simulator
 
 VERSION = "dev"
 

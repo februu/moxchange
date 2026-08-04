@@ -1,6 +1,7 @@
 import random
-from typing import Iterator
+from collections.abc import Iterator
 from decimal import Decimal
+
 from moxchange.types import Kline
 
 

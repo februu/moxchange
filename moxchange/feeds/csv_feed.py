@@ -1,6 +1,7 @@
 import csv
-from typing import Iterator
+from collections.abc import Iterator
 from decimal import Decimal
+
 from moxchange.types import Kline
 
 
@@ -9,7 +10,7 @@ class CSVFeed:
 
     def __init__(self, file_path: str, has_header: bool = True):
         self._file_path = file_path
-        self._file = open(file_path, "r", newline="")
+        self._file = open(file_path, "r", newline="")  # noqa: SIM115
         self._has_header = has_header
         if self._has_header:
             self._reader = csv.DictReader(self._file)

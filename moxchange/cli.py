@@ -32,7 +32,7 @@ class CLI:
 
         extra = (
             "\t".join(
-                f"[dim]{k}:[/dim][{color}]{str(v):<10}[/{color}]"
+                f"[dim]{k}:[/dim][{color}]{v!s:<10}[/{color}]"
                 for k, v in candle.data.items()
             )
             if candle.data
