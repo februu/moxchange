@@ -3,8 +3,12 @@ from moxchange.feeds.mock_feed import MockFeed
 from moxchange.feeds import RoundRobinFeed, SequentialFeed
 
 
-def make_feed(n: int, starting_price: float = 100.0, seed: int = 42) -> MockFeed:
-    return MockFeed(amount_of_klines=n, starting_price=starting_price, seed=seed)
+def make_feed(
+    n: int, starting_price: float = 100.0, seed: int = 42, symbol: str = "BTCUSD"
+) -> MockFeed:
+    return MockFeed(
+        symbol=symbol, amount_of_klines=n, starting_price=starting_price, seed=seed
+    )
 
 
 class TestRoundRobinFeed:
