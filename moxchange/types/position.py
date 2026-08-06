@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
 
+from .asset import Asset
 from .transaction import Transaction
 
 
@@ -15,9 +16,9 @@ def _sign(value: Decimal) -> int:
 
 @dataclass
 class Position:
-    """Net exposure to a symbol, built up by netting a sequence of trades."""
+    """Net exposure to a asset, built up by netting a sequence of trades."""
 
-    symbol: str
+    asset: Asset
     quantity: Decimal = Decimal(0)      # signed: positive for long, negative for short
     entry_price: Decimal = Decimal(0)
     leverage: Decimal = Decimal(1)
@@ -64,7 +65,7 @@ class Position:
             self.quantity = new_quantity
 
         return Transaction(
-            symbol=self.symbol,
+            asset=self.asset,
             quantity=quantity,
             price=price,
             timestamp=timestamp,

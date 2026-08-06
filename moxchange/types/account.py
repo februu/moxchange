@@ -2,7 +2,8 @@ import uuid
 from collections import defaultdict
 from decimal import Decimal
 
-from moxchange.types import Position
+from .asset import Asset
+from .position import Position
 
 
 class Account:
@@ -10,7 +11,7 @@ class Account:
         self.id = id
         self.custom_name = custom_name
         self.balance : Decimal = Decimal("0.0")
-        self.positions : dict[str, Position] = defaultdict()
+        self._positions : dict[Asset, Position] = defaultdict()
 
 
     def __repr__(self):

@@ -1,12 +1,14 @@
 from dataclasses import dataclass, field
 from decimal import Decimal
 
+from .asset import Asset
+
 
 @dataclass(frozen=True)
 class Kline:
     """Represents a single candlestick."""
 
-    symbol: str
+    asset: Asset
     open: Decimal
     high: Decimal
     low: Decimal

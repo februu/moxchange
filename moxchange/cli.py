@@ -35,7 +35,7 @@ class CLI:
             else ""
         )
         console.print(
-            f"[dim]{candle.symbol}[/dim]  "
+            f"[dim]{candle.asset}[/dim]  "
             f"[dim]{candle.open}[/dim] "
             f"[dim]{candle.high}[/dim] "
             f"[dim]{candle.low}[/dim] "

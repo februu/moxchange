@@ -1,6 +1,6 @@
 from moxchange import CLI, EventBus, MockFeed, Simulator
 from moxchange.events import KlineEvent
-from moxchange.services import AccountService
+from moxchange.services import AccountService, OrderService
 
 DEBUG = True
 VERSION = "dev"
@@ -12,8 +12,9 @@ cli = CLI()
 feed = MockFeed(symbol="BTCUSD", amount_of_klines=500, starting_price=100.0)
 
 account_service = AccountService(bus)
+order_service = OrderService(bus, account_service)
 
-simulator = Simulator(bus, feed, account_service)
+simulator = Simulator(bus, feed, account_service, order_service)
 
 if DEBUG:
     bus.subscribe(KlineEvent, cli.on_candle_event)

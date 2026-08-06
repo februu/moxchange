@@ -1,7 +1,7 @@
 import uuid
 
 from moxchange.events import EventBus
-from moxchange.types import Account
+from moxchange.types import Account, Kline
 
 
 class AccountService:
@@ -21,3 +21,6 @@ class AccountService:
 
     def clear(self) -> None:
         self._accounts.clear()
+
+    def update_positions(self, kline : Kline) -> None:
+        ...
