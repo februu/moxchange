@@ -2,7 +2,7 @@ import csv
 from collections.abc import Iterator
 from decimal import Decimal
 
-from moxchange.types import Kline
+from moxchange.types import Asset, Kline
 
 
 class CSVFeed:
@@ -37,7 +37,7 @@ class CSVFeed:
                 if k.lower() not in {"open", "high", "low", "close"}
             }
             return Kline(
-                symbol=self._symbol,
+                asset=Asset(self._symbol),
                 open=Decimal(row["open"]),
                 high=Decimal(row["high"]),
                 low=Decimal(row["low"]),
@@ -47,7 +47,7 @@ class CSVFeed:
         else:
             _open, high, low, close = row[:4]
             return Kline(
-                symbol=self._symbol,
+                asset=Asset(self._symbol),
                 open=Decimal(_open),
                 high=Decimal(high),
                 low=Decimal(low),

@@ -2,7 +2,7 @@ import random
 from collections.abc import Iterator
 from decimal import Decimal
 
-from moxchange.types import Kline
+from moxchange.types import Asset, Kline
 
 
 class MockFeed:
@@ -51,7 +51,7 @@ class MockFeed:
         self._current_index += 1
 
         return Kline(
-            symbol=self._symbol,
+            asset=Asset(self._symbol),
             open=Decimal(str(round(open_price, 8))),
             high=Decimal(str(round(high_price, 8))),
             low=Decimal(str(round(low_price, 8))),
