@@ -37,6 +37,17 @@ class OrderService:
     def clear_open_orders(self) -> None:
         self.open_orders.clear()
 
-    def match_orders(self, kline : Kline) -> list[Order]:
-        ...
-    
+    def execute_orders(self, kline : Kline) -> None:
+        """Executes orders based on the provided Kline data."""
+
+        orders_for_asset = self.open_orders[kline.asset]
+
+        for order_id, order in list(orders_for_asset.items()):
+            price, order = order.try_fill(kline)
+            if price is None:
+                orders_for_asset[order_id] = order
+                continue
+
+            # Kline carries no timestamp; fall back to the order's placement time.
+            self.account_service.apply_fill(order.account_id, order.asset, order.quantity, price, order.timestamp)
+            del orders_for_asset[order_id]

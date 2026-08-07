@@ -18,7 +18,7 @@ class Simulator:
         candle = next(self.feed)
         self.event_bus.publish(KlineEvent(kline=candle))
         self.account_service.update_positions(candle)
-        self.order_service.match_orders(candle)
+        self.order_service.execute_orders(candle)
 
     def reset(self):
         """Resets the simulation to its initial state."""
